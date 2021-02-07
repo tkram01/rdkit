@@ -18,25 +18,12 @@
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/FileParsers/FileParsers.h>
-#include <GraphMol/MolDraw2D/MolDraw2D.h>
-#include <GraphMol/MolDraw2D/MolDraw2DSVG.h>
-#include <GraphMol/MolDraw2D/MolDraw2DUtils.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
-#include <GraphMol/Descriptors/Property.h>
 #include <GraphMol/Descriptors/MolDescriptors.h>
 #include <GraphMol/Fingerprints/MorganFingerprints.h>
 #include <GraphMol/Depictor/RDDepictor.h>
 #include <GraphMol/CIPLabeler/CIPLabeler.h>
-#include <GraphMol/Abbreviations/Abbreviations.h>
 #include <DataStructs/BitOps.h>
-
-#include <INCHI-API/inchi.h>
-
-#include <rapidjson/document.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
-
-namespace rj = rapidjson;
 
 using namespace RDKit;
 
@@ -161,6 +148,14 @@ bool JSMol::get_substruct_match(const JSMol &q) const {
   else {
       return false;
   }
+}
+
+std::string get_sub_fp(unsigned int minPath, unsigned int maxPath, unsigned int fpSize, unsigned int nBitsPerHash) const {
+  if (!d_mol) return "";
+  auto fp = Chem.RDKFingerprint(mol, minPath, maxPath, fpSize, nBitsPerHash)
+  std::string res = BitVectToText(*fp);
+  delete fp;
+  return res;
 }
 
 std::string JSMol::get_morgan_fp(unsigned int radius,

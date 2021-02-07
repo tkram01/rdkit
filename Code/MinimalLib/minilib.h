@@ -19,6 +19,8 @@ class JSMol {
   bool get_substruct_match(const JSMol &q) const;
   std::string get_morgan_fp(unsigned int radius, unsigned int len) const;
   std::string get_morgan_fp() const { return get_morgan_fp(2, 2048); };
+  std::string get_sub_fp(unsigned int minPath, unsigned int maxPath, unsigned int fpSize, unsigned int nBitsPerHash) const;
+  std::string get_sub_fp() const { return get_sub_fp(1,6,1024,2); };
   bool is_valid() const { return d_mol.get() != nullptr; };
   std::unique_ptr<RDKit::RWMol> d_mol;
 };
