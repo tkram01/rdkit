@@ -21,6 +21,7 @@
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <GraphMol/Descriptors/MolDescriptors.h>
 #include <GraphMol/Fingerprints/MorganFingerprints.h>
+#include <GraphMol/Fingerprints/Fingerprints.h>
 #include <GraphMol/Depictor/RDDepictor.h>
 #include <GraphMol/CIPLabeler/CIPLabeler.h>
 #include <DataStructs/BitOps.h>
@@ -152,7 +153,7 @@ bool JSMol::get_substruct_match(const JSMol &q) const {
 
 std::string get_sub_fp(unsigned int minPath, unsigned int maxPath, unsigned int fpSize, unsigned int nBitsPerHash) const {
   if (!d_mol) return "";
-  auto fp = Chem.RDKFingerprint(mol, minPath, maxPath, fpSize, nBitsPerHash)
+  auto fp = Fingerprints::RDKFingerprintMol(*d_mol, minPath, maxPath, fpSize, nBitsPerHash)
   std::string res = BitVectToText(*fp);
   delete fp;
   return res;
