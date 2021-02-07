@@ -25,7 +25,7 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
                 select_overload<std::string() const>(&JSMol::get_morgan_fp))
       .function("get_morgan_fp",
                 select_overload<std::string(unsigned int, unsigned int) const>(
-                    &JSMol::get_morgan_fp))
+                    &JSMol::get_morgan_fp));
 
   function("version", &version);
   function("get_mol", &get_mol, allow_raw_pointers());
