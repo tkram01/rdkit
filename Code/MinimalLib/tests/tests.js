@@ -38,7 +38,17 @@ function test_basics(){
 
 initRDKitModule().then(function(instance) {
     RDKitModule = instance;
-    console.log(RDKitModule.version());
-    test_basics();
+    const used = process.memoryUsage().heapUsed / 1024 / 1024;
+console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
+
+    //console.log(RDKitModule.version());
+    //test_basics();
+    var smiles = "c1ccccc1";
+    var smarts = "c1ccccc1";
+    var qmol = RDKitModule.get_qmol(smarts);
+    var mol = RDKitModule.get_mol(smiles);
+    console.log(mol.get_substruct_match(qmol));
     console.log("Tests finished successfully");
+    const used2 = process.memoryUsage().heapUsed / 1024 / 1024;
+console.log(`The script uses approximately ${Math.round(used2 * 100) / 100} MB`);
 });
